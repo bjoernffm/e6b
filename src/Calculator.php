@@ -1,6 +1,6 @@
 <?php
 
-namespace e6b;
+namespace bjoernffm\e6b;
 
 class Calculator
 {

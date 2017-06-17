@@ -1,8 +1,6 @@
 <?php
 
-use \e6b\Calculator as e6bCalc;
-
-require_once __DIR__.'/../Calculator.php';
+use \bjoernffm\e6b\Calculator as e6bCalc;
 
 /**
  * @codeCoverageIgnore
