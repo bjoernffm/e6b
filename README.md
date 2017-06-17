@@ -9,9 +9,11 @@ An E6-B calculator is a form of circular slide rule used in aviation and one of 
 Imagine we want to fly a course of 220 degrees having a true airspeed of 110 kts. Wind comes from a direction of 270 degrees with a speed of 25 kts. So what's the resulting angle of correction, heading and groundspeed?
 
 ```php
-use \e6b\Calculator as e6bCalc;
+<?php
 
-...
+use bjoernffm\e6b\Calculator as e6bCalc;
+
+require_once __DIR__ . '/vendor/autoload.php';
 
 $result = e6bCalc::getWindCorrectionAngle(220, 110, 270, 25);
 var_dump($result);
