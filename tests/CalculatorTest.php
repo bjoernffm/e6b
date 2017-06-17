@@ -59,6 +59,33 @@ class CalculatorTest extends PHPUnit_Framework_TestCase
         );
     }
 
+    public function testGetWindcomponents1()
+    {
+        $result = e6bCalc::getWindcomponents(90, 60, 30);
+        $this->assertEquals($result, ['crosswind' => 15, 'headwind' => 26]);
+
+        $result = e6bCalc::getWindcomponents(30, 60, 30);
+        $this->assertEquals($result, ['crosswind' => 15, 'headwind' => 26]);
+    }
+
+    public function testGetWindcomponents2()
+    {
+        $result = e6bCalc::getWindcomponents(0, 90, 15);
+        $this->assertEquals($result, ['crosswind' => 15, 'headwind' => 0]);
+
+        $result = e6bCalc::getWindcomponents(0, 270, 15);
+        $this->assertEquals($result, ['crosswind' => 15, 'headwind' => 0]);
+    }
+
+    public function testGetWindcomponents3()
+    {
+        $result = e6bCalc::getWindcomponents(0, 0, 40);
+        $this->assertEquals($result, ['crosswind' => 0, 'headwind' => 40]);
+
+        $result = e6bCalc::getWindcomponents(180, 0, 40);
+        $this->assertEquals($result, ['crosswind' => 0, 'headwind' => 0]);
+    }
+
     public function testGetFlightTime1()
     {
         $result = e6bCalc::getFlightTime(5, 90);

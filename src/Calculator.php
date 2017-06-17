@@ -29,6 +29,25 @@ class Calculator
         ];
     }
 
+    public static function getWindcomponents($trueCourse, $windDirection, $windSpeed)
+    {
+        $trueCourse = deg2rad($trueCourse % 360);
+        $windDirection = deg2rad($windDirection % 360);
+        $angle = abs($trueCourse-$windDirection);
+
+        $headwind = (int) abs(round(cos($angle)*$windSpeed));
+        $crosswind = (int) abs(round(sin($angle)*$windSpeed));
+
+        if ($angle > (M_PI/2) and  $angle < (M_PI+(M_PI/2))) {
+            $headwind = 0;
+        }
+
+        return [
+            'headwind' => $headwind,
+            'crosswind' => $crosswind
+        ];
+    }
+
     public static function getFlightTime($distance, $groundSpeed)
     {
         if ($distance == 0 and $groundSpeed == 0) {
