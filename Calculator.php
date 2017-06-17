@@ -6,8 +6,8 @@ class Calculator
 {
     public static function getWindCorrectionAngle($course, $trueAirspeed, $windDirection, $windSpeed)
     {
-        $course = deg2rad($course);
-        $windDirection = deg2rad($windDirection);
+        $course = deg2rad($course % 360);
+        $windDirection = deg2rad($windDirection % 360);
 
         $wca = asin(($windSpeed * sin($windDirection-$course)) / $trueAirspeed);
         //$wca = rad2deg($wca);
@@ -31,28 +31,20 @@ class Calculator
 
     public static function getFlightTime($distance, $groundSpeed)
     {
-        $minutes = ($distance / $groundSpeed) * 60;
-
-        $formattedMinutes = round($minutes) % 60;
-        if ($formattedMinutes < 10) {
-            $formattedMinutes = '0'.$formattedMinutes;
+        if ($distance == 0 and $groundSpeed == 0) {
+            return [
+                'minutes' => 0,
+                'formatted' => '00:00'
+            ];
         }
 
-        $formattedHours = floor($minutes / 60);
-        if ($formattedHours < 10) {
-            $formattedHours = '0'.$formattedHours;
+        if ($groundSpeed <= 0) {
+            return [
+                'minutes' => INF,
+                'formatted' => '--:--'
+            ];
         }
 
-        $formatted = $formattedHours . ':' . $formattedMinutes;
-
-        return [
-            'minutes' => (int) round($minutes),
-            'formatted' => $formatted
-        ];
-    }
-
-    public static function getTrueAirspeed($distance, $groundSpeed)
-    {
         $minutes = ($distance / $groundSpeed) * 60;
 
         $formattedMinutes = round($minutes) % 60;
@@ -104,6 +96,3 @@ class Calculator
         ];
     }
 }
-
-$ret = Calculator::convertFeet(37000);
-var_dump($ret);
