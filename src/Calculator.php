@@ -10,7 +10,6 @@ class Calculator
         $windDirection = deg2rad($windDirection % 360);
 
         $wca = asin(($windSpeed * sin($windDirection-$course)) / $trueAirspeed);
-        //$wca = rad2deg($wca);
 
         $gs =
             sqrt(
