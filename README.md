@@ -1,5 +1,7 @@
 # E6-B Calculator Emulation
 
+[![Build Status](https://travis-ci.org/bjoernffm/e6b.svg?branch=master)](https://travis-ci.org/bjoernffm/e6b)
+
 This class provides a first and very basic version of an ordinary E6-B flight computer also nicknamed the "whiz wheel".
 
 An E6-B calculator is a form of circular slide rule used in aviation and one of a very few analog computers in widespread use in the 21st century.
