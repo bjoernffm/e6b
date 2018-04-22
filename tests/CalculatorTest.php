@@ -211,4 +211,19 @@ class CalculatorTest extends PHPUnit_Framework_TestCase
         $result = e6bCalc::convertFeet(37000);
         $this->assertEquals($result, ['meters' => 11278]);
     }
+
+    public function testGetTAS()
+    {
+        $result = e6bCalc::getTAS(100);
+        $this->assertEquals($result, 100);
+
+        $result = e6bCalc::getTAS(100, 3000);
+        $this->assertEquals($result, 106);
+
+        $result = e6bCalc::getTAS(200, 18000);
+        $this->assertEquals($result, 283);
+
+        $result = e6bCalc::getTAS(250, 36000);
+        $this->assertEquals($result, 528);
+    }
 }

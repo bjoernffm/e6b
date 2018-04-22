@@ -47,6 +47,33 @@ class Calculator
         ];
     }
 
+    public static function getTAS($IAS, $altitude = 0, $QNH = 1013.25, $temperature = 15)
+    {
+        $lapseRate = 0.0019812;		// degrees / foot std. lapse rate C° in to K° result
+        $temperatureCorrection = 273.15;			// deg Kelvin
+        $standardTemperature0 = 288.15;			// deg Kelvin
+
+        $xx = $QNH / 1013.25;
+        $pressureAltitude = $altitude + 145442.2 * (1 - pow($xx, 0.190261));
+
+        $standardTemperature = $standardTemperature0 - $pressureAltitude * $lapseRate;
+
+        $temperatureRatio = $standardTemperature / $lapseRate;
+        $xx = $standardTemperature /($temperature + $temperatureCorrection);	// for temp in deg C
+        $densityAltitude = $pressureAltitude + $temperatureRatio * (1 - pow($xx, 0.234969));
+
+        $a = $densityAltitude * $lapseRate;			// Calculate DA temperature
+        $b = $standardTemperature0 - $a;				// Correct DA temp to Kelvin
+        $c = $b / $standardTemperature0;				// Temperature ratio
+        $c1 = 1 / 0.234969;				// Used to find .235 root next
+        $d = pow($c, $c1);			// Establishes Density Ratio
+        $d = pow($d, .5);			// For TAS, square root of DR
+        $e = 1 / $d;					// For TAS; 1 divided by above
+        $TAS = $e * $IAS;
+
+        return round($TAS);
+    }
+
     public static function getFlightTime($distance, $groundSpeed)
     {
         if ($distance == 0 and $groundSpeed == 0) {
