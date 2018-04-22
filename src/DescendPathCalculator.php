@@ -54,7 +54,7 @@ class DescendPathCalculator extends Calculator
         }
 
         $rest = $descendTime-floor($descendTime);
-        var_dump($rest);
+
         if ($rest != 0) {
             $highAltitude = $initialAltitude - (($i-1)*$descentRate*$rate);
             $lowAltitude = $initialAltitude - ($descendTime*$descentRate*$rate);
