@@ -268,23 +268,28 @@ class Calculator
 
         // format 40° 26.767′ N 79° 58.933′ W
         $latDegrees = floor($latAbsolute);
-        $latMinutes = ($latAbsolute-$latDegrees)*60;
+        $latMinutes = round(($latAbsolute-$latDegrees)*60, 3);
         $lat = $latDegrees.'° '.$latMinutes.'\' '.$latDirection;
         $lonDegrees = floor($lonAbsolute);
-        $lonMinutes = ($lonAbsolute-$lonDegrees)*60;
+        $lonMinutes = round(($lonAbsolute-$lonDegrees)*60, 3);
         $lon = $lonDegrees.'° '.$lonMinutes.'\' '.$lonDirection;
         $ddm = $lat.' '.$lon;
 
         // format 40.446° N 79.982° W
-        $lat = $latAbsolute.' '.$latDirection;
-        $lon = $lonAbsolute.' '.$lonDirection;
+        $lat = round($latAbsolute, 3).' '.$latDirection;
+        $lon = round($lonAbsolute, 3).' '.$lonDirection;
         $dd = $lat.' '.$lon;
+
+        // format 40.446° N 79.982° W
+        $lat = round($coordinates['lat'], 3);
+        $lon = round($coordinates['lon'], 3);
+        $ddr = $lat.' '.$lon;
 
         return [
             'dms' => $dms,
             'ddm' => $ddm,
             'dd' => $dd,
-            'dds' => implode(' ', $coordinates),
+            'dds' => $ddr,
             'raw' => $coordinates
         ];
     }

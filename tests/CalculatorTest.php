@@ -296,9 +296,9 @@ class CalculatorTest extends PHPUnit_Framework_TestCase
         $result = e6bCalc::convertCoordinates('50.8648171 9.7180354');
         $this->assertEquals($result, [
             'dms' => '50° 51\' 53" N 9° 43\' 5" E',
-            'ddm' => '50° 51.889026\' N 9° 43.082124\' E',
-            'dd' => '50.8648171 N 9.7180354 E',
-            'dds' => '50.8648171 9.7180354',
+            'ddm' => '50° 51.889\' N 9° 43.082\' E',
+            'dd' => '50.865 N 9.718 E',
+            'dds' => '50.865 9.718',
             'raw' => [
                 'lat' => 50.8648171,
                 'lon' => 9.7180354
@@ -311,9 +311,9 @@ class CalculatorTest extends PHPUnit_Framework_TestCase
         $result = e6bCalc::convertCoordinates('-50.8648171 -9.7180354');
         $this->assertEquals($result, [
             'dms' => '50° 51\' 53" S 9° 43\' 5" W',
-            'ddm' => '50° 51.889026\' S 9° 43.082124\' W',
-            'dd' => '50.8648171 S 9.7180354 W',
-            'dds' => '-50.8648171 -9.7180354',
+            'ddm' => '50° 51.889\' S 9° 43.082\' W',
+            'dd' => '50.865 S 9.718 W',
+            'dds' => '-50.865 -9.718',
             'raw' => [
                 'lat' => -50.8648171,
                 'lon' => -9.7180354
