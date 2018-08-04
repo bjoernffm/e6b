@@ -227,58 +227,58 @@ class CalculatorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($result, 528);
     }
 
-    public function testConvertLatLonToDecimalDegrees1()
+    public function testConvertCoordinatesToDecimalDegrees1()
     {
         // format 40.446° N 79.982° W
-        $result = e6bCalc::convertLatLonToDecimalDegrees('-40.446 -79.982');
+        $result = e6bCalc::convertCoordinatesToDecimalDegrees('-40.446 -79.982');
         $this->assertEquals($result, ['lat' => -40.446, 'lon' => -79.982]);
         // format 40.446° N 79.982° W
-        $result = e6bCalc::convertLatLonToDecimalDegrees('-40.446 -160.982');
+        $result = e6bCalc::convertCoordinatesToDecimalDegrees('-40.446 -160.982');
         $this->assertEquals($result, ['lat' => -40.446, 'lon' => -160.982]);
     }
 
-    public function testConvertLatLonToDecimalDegrees2()
+    public function testConvertCoordinatesToDecimalDegrees2()
     {
         // format 40.446° N 79.982° W
-        $result = e6bCalc::convertLatLonToDecimalDegrees('40.446° N 79.982° W');
+        $result = e6bCalc::convertCoordinatesToDecimalDegrees('40.446° N 79.982° W');
         $this->assertEquals($result, ['lat' => 40.446, 'lon' => -79.982]);
 
-        $result = e6bCalc::convertLatLonToDecimalDegrees('40.446 s 079.982 e');
+        $result = e6bCalc::convertCoordinatesToDecimalDegrees('40.446 s 079.982 e');
         $this->assertEquals($result, ['lat' => -40.446, 'lon' => 79.982]);
 
-        $result = e6bCalc::convertLatLonToDecimalDegrees(' 40.446s160.982e ');
+        $result = e6bCalc::convertCoordinatesToDecimalDegrees(' 40.446s160.982e ');
         $this->assertEquals($result, ['lat' => -40.446, 'lon' => 160.982]);
     }
 
-    public function testConvertLatLonToDecimalDegrees3()
+    public function testConvertCoordinatesToDecimalDegrees3()
     {
         // format 40° 26.767′ N 79° 58.933′ W
-        $result = e6bCalc::convertLatLonToDecimalDegrees('40° 26.767\' N 79° 58.933\' W');
+        $result = e6bCalc::convertCoordinatesToDecimalDegrees('40° 26.767\' N 79° 58.933\' W');
         $this->assertEquals($result, ['lat' => 40.44611666666667, 'lon' => -79.98221666666667]);
 
-        $result = e6bCalc::convertLatLonToDecimalDegrees('40  26.767  n 079  58.933 W');
+        $result = e6bCalc::convertCoordinatesToDecimalDegrees('40  26.767  n 079  58.933 W');
         $this->assertEquals($result, ['lat' => 40.44611666666667, 'lon' => -79.98221666666667]);
 
-        $result = e6bCalc::convertLatLonToDecimalDegrees('40 26.767s 160 30.933e');
+        $result = e6bCalc::convertCoordinatesToDecimalDegrees('40 26.767s 160 30.933e');
         $this->assertEquals($result, ['lat' => -40.44611666666667, 'lon' => 160.51555]);
     }
 
-    public function testConvertLatLonToDecimalDegrees4()
+    public function testConvertCoordinatesToDecimalDegrees4()
     {
         // format 40° 26' 46" N 79° 58' 56" E
-        $result = e6bCalc::convertLatLonToDecimalDegrees('40° 26\' 46" N 79° 58\' 56" O');
+        $result = e6bCalc::convertCoordinatesToDecimalDegrees('40° 26\' 46" N 79° 58\' 56" O');
         $this->assertEquals($result, ['lat' => 40.446111111111, 'lon' => 79.982222222222]);
 
-        $result = e6bCalc::convertLatLonToDecimalDegrees('40°  26\'  46"  n  79°  58\'  56"  o');
+        $result = e6bCalc::convertCoordinatesToDecimalDegrees('40°  26\'  46"  n  79°  58\'  56"  o');
         $this->assertEquals($result, ['lat' => 40.446111111111, 'lon' => 79.982222222222]);
 
-        $result = e6bCalc::convertLatLonToDecimalDegrees('40 26 46 n 79 58 56 e');
+        $result = e6bCalc::convertCoordinatesToDecimalDegrees('40 26 46 n 79 58 56 e');
         $this->assertEquals($result, ['lat' => 40.446111111111, 'lon' => 79.982222222222]);
 
-        $result = e6bCalc::convertLatLonToDecimalDegrees('40 26 46 s 079 58 56 w');
+        $result = e6bCalc::convertCoordinatesToDecimalDegrees('40 26 46 s 079 58 56 w');
         $this->assertEquals($result, ['lat' => -40.446111111111, 'lon' => -79.982222222222]);
 
-        $result = e6bCalc::convertLatLonToDecimalDegrees('40 26 46s 160 30 56w');
+        $result = e6bCalc::convertCoordinatesToDecimalDegrees('40 26 46s 160 30 56w');
         $this->assertEquals($result, ['lat' => -40.446111111111, 'lon' => -160.51555555555555]);
     }
 
@@ -286,8 +286,38 @@ class CalculatorTest extends PHPUnit_Framework_TestCase
      * @expectedException Exception
      * @expectExceptionMessage String "40° 26' 46" N 1179° 58' 56" O" could not be parsed.
      */
-    public function testConvertLatLonToDecimalDegreesFail()
+    public function testConvertCoordinatesToDecimalDegreesFail()
     {
-        $result = e6bCalc::convertLatLonToDecimalDegrees('40° 26\' 46" N 1179° 58\' 56" O');
+        $result = e6bCalc::convertCoordinatesToDecimalDegrees('40° 26\' 46" N 1179° 58\' 56" O');
+    }
+
+    public function testConvertCoordinates1()
+    {
+        $result = e6bCalc::convertCoordinates('50.8648171 9.7180354');
+        $this->assertEquals($result, [
+            'dms' => '50° 51\' 53" N 9° 43\' 5" E',
+            'ddm' => '50° 51.889026\' N 9° 43.082124\' E',
+            'dd' => '50.8648171 N 9.7180354 E',
+            'dds' => '50.8648171 9.7180354',
+            'raw' => [
+                'lat' => 50.8648171,
+                'lon' => 9.7180354
+            ]
+        ]);
+    }
+
+    public function testConvertCoordinates2()
+    {
+        $result = e6bCalc::convertCoordinates('-50.8648171 -9.7180354');
+        $this->assertEquals($result, [
+            'dms' => '50° 51\' 53" S 9° 43\' 5" W',
+            'ddm' => '50° 51.889026\' S 9° 43.082124\' W',
+            'dd' => '50.8648171 S 9.7180354 W',
+            'dds' => '-50.8648171 -9.7180354',
+            'raw' => [
+                'lat' => -50.8648171,
+                'lon' => -9.7180354
+            ]
+        ]);
     }
 }

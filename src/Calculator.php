@@ -145,12 +145,12 @@ class Calculator
 
     /**
      * Formats supported:
-     * 40.446° -79.982°
+     * 40.446 -79.982
      * 40.446° N 79.982° W
      * 40° 26.767′ N 79° 58.933′ W
      * 40° 26' 46" N 79° 58' 56" E
      */
-    public static function convertLatLonToDecimalDegrees($latlon)
+    public static function convertCoordinatesToDecimalDegrees($latlon)
     {
         $latlon = trim($latlon);
 
@@ -235,5 +235,57 @@ class Calculator
         }
 
         throw new Exception('String "'.$latlon.'" could not be parsed.');
+    }
+
+    public static function convertCoordinates($latlon)
+    {
+        $coordinates = self::convertCoordinatesToDecimalDegrees($latlon);
+        $latAbsolute = abs($coordinates['lat']);
+        $lonAbsolute = abs($coordinates['lon']);
+
+        if ($coordinates['lat'] < 0) {
+            $latDirection = 'S';
+        } else {
+            $latDirection = 'N';
+        }
+
+        if ($coordinates['lon'] < 0) {
+            $lonDirection = 'W';
+        } else {
+            $lonDirection = 'E';
+        }
+
+        // format 40° 26′ 46″ N 79° 58′ 56″ W
+        $latDegrees = floor($latAbsolute);
+        $latMinutes = floor(($latAbsolute-$latDegrees)*60);
+        $latSeconds = round((($latAbsolute-$latDegrees)*3600)-($latMinutes*60));
+        $lat = $latDegrees.'° '.$latMinutes.'\' '.$latSeconds.'" '.$latDirection;
+        $lonDegrees = floor($lonAbsolute);
+        $lonMinutes = floor(($lonAbsolute-$lonDegrees)*60);
+        $lonSeconds = round((($lonAbsolute-$lonDegrees)*3600)-($lonMinutes*60));
+        $lon = $lonDegrees.'° '.$lonMinutes.'\' '.$lonSeconds.'" '.$lonDirection;
+        $dms = $lat.' '.$lon;
+
+        // format 40° 26.767′ N 79° 58.933′ W
+        $latDegrees = floor($latAbsolute);
+        $latMinutes = ($latAbsolute-$latDegrees)*60;
+        $lat = $latDegrees.'° '.$latMinutes.'\' '.$latDirection;
+        $lonDegrees = floor($lonAbsolute);
+        $lonMinutes = ($lonAbsolute-$lonDegrees)*60;
+        $lon = $lonDegrees.'° '.$lonMinutes.'\' '.$lonDirection;
+        $ddm = $lat.' '.$lon;
+
+        // format 40.446° N 79.982° W
+        $lat = $latAbsolute.' '.$latDirection;
+        $lon = $lonAbsolute.' '.$lonDirection;
+        $dd = $lat.' '.$lon;
+
+        return [
+            'dms' => $dms,
+            'ddm' => $ddm,
+            'dd' => $dd,
+            'dds' => implode(' ', $coordinates),
+            'raw' => $coordinates
+        ];
     }
 }
