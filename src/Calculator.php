@@ -2,6 +2,8 @@
 
 namespace bjoernffm\e6b;
 
+use \Exception;
+
 class Calculator
 {
     public static function getWindCorrectionAngle($course, $trueAirspeed, $windDirection, $windSpeed)
@@ -139,5 +141,99 @@ class Calculator
         return [
             'meters' => (int) round($ft * 0.3048)
         ];
+    }
+
+    /**
+     * Formats supported:
+     * 40.446° -79.982°
+     * 40.446° N 79.982° W
+     * 40° 26.767′ N 79° 58.933′ W
+     * 40° 26' 46" N 79° 58' 56" E
+     */
+    public static function convertLatLonToDecimalDegrees($latlon)
+    {
+        $latlon = trim($latlon);
+
+        // format 40.446 -79.982
+        preg_match('#\A(-?)(\d+\.\d+)\s+(-?)(\d+\.\d+)#', $latlon, $matches);
+        if (count($matches) == 5) {
+            $lat = abs($matches[2]);
+            $lon = abs($matches[4]);
+
+            if (strtolower($matches[1]) == '-') {
+                $lat *= -1;
+            }
+
+            if (strtolower($matches[3]) == '-') {
+                $lon *= -1;
+            }
+
+            return [
+                'lat' => $lat,
+                'lon' => $lon
+            ];
+        }
+
+        // format 40.446° N 79.982° W
+        preg_match('#\A(\d{1,2}\.\d+)\D*([ns])\D*(\d{1,3}\.\d+)\D*([woe])#i', $latlon, $matches);
+        if (count($matches) == 5) {
+            $lat = abs($matches[1]);
+            $lon = abs($matches[3]);
+
+            if (strtolower($matches[2]) == 's') {
+                $lat *= -1;
+            }
+
+            if (strtolower($matches[4]) == 'w') {
+                $lon *= -1;
+            }
+
+            return [
+                'lat' => $lat,
+                'lon' => $lon
+            ];
+        }
+
+        // format 40° 26.767′ N 79° 58.933′ W
+        preg_match('#\A(\d{1,2})\D+(\d{1,2}\.\d+)\D*([ns])\D*(\d{1,3})\D+(\d{1,2}\.\d+)\D*([woe])#i', $latlon, $matches);
+        if (count($matches) == 7) {
+            $lat = abs($matches[1] + ($matches[2]/60));
+            $lon = abs($matches[4] + ($matches[5]/60));
+
+            if (strtolower($matches[3]) == 's') {
+                $lat *= -1;
+            }
+
+            if (strtolower($matches[6]) == 'w') {
+                $lon *= -1;
+            }
+
+            return [
+                'lat' => $lat,
+                'lon' => $lon
+            ];
+        }
+
+        // format 40° 26' 46" N 79° 58' 56" E
+        preg_match('#\A(\d{1,2})\D+(\d{1,2})\D+(\d{1,2})["]?\s*([ns])\D+(\d{1,3})\D+(\d{1,2})\D+(\d{1,2})["]?\s*([woe])#i', $latlon, $matches);
+        if (count($matches) == 9) {
+            $lat = abs($matches[1] + ($matches[2]/60) + ($matches[3]/3600));
+            $lon = abs($matches[5] + ($matches[6]/60) + ($matches[7]/3600));
+
+            if (strtolower($matches[4]) == 's') {
+                $lat *= -1;
+            }
+
+            if (strtolower($matches[8]) == 'w') {
+                $lon *= -1;
+            }
+
+            return [
+                'lat' => $lat,
+                'lon' => $lon
+            ];
+        }
+
+        throw new Exception('String "'.$latlon.'" could not be parsed.');
     }
 }
