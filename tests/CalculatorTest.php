@@ -146,6 +146,12 @@ class CalculatorTest extends PHPUnit_Framework_TestCase
         );
     }
 
+    public function testGetSunriseSunset()
+    {
+        $result = e6bCalc::getSunriseSunset('49° 57\' 36" N 8° 38\' 45" E');
+        var_dump($result);
+    }
+
     public function testConvertKnots()
     {
         $result = e6bCalc::convertKnots(-10);
@@ -319,5 +325,25 @@ class CalculatorTest extends PHPUnit_Framework_TestCase
                 'lon' => -9.7180354
             ]
         ]);
+    }
+
+    public function testConvertDegrees()
+    {
+        $result = e6bCalc::convertDegrees(360);
+        $this->assertEquals($result, ['direction' => 'N']);
+        $result = e6bCalc::convertDegrees(40);
+        $this->assertEquals($result, ['direction' => 'NE']);
+        $result = e6bCalc::convertDegrees(88);
+        $this->assertEquals($result, ['direction' => 'E']);
+        $result = e6bCalc::convertDegrees(130);
+        $this->assertEquals($result, ['direction' => 'SE']);
+        $result = e6bCalc::convertDegrees(190);
+        $this->assertEquals($result, ['direction' => 'S']);
+        $result = e6bCalc::convertDegrees(225.123);
+        $this->assertEquals($result, ['direction' => 'SW']);
+        $result = e6bCalc::convertDegrees(270);
+        $this->assertEquals($result, ['direction' => 'W']);
+        $result = e6bCalc::convertDegrees(292.6);
+        $this->assertEquals($result, ['direction' => 'NW']);
     }
 }

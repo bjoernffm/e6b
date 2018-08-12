@@ -3,6 +3,8 @@
 namespace bjoernffm\e6b;
 
 use \Exception;
+use \DateTime;
+use \DateTimeZone;
 
 class Calculator
 {
@@ -110,6 +112,27 @@ class Calculator
             'minutes' => (int) round($minutes),
             'formatted' => $formatted
         ];
+    }
+
+    public static function getSunriseSunset($coordinates, $date = 'today')
+    {
+        $timestamp = strtotime($date);
+        $coordinates = self::convertCoordinatesToDecimalDegrees($coordinates);
+        $result = date_sun_info($timestamp, $coordinates['lat'], $coordinates['lon']);
+
+        $return = [];
+
+        $date = new DateTime();
+        $date->setTimestamp($result['civil_twilight_begin']);
+        $return['bcmt']['utc'] = $date->format('H:i:s');
+        $return['bcmt']['iso'] = $date->format('c');
+
+        $date = new DateTime();
+        $date->setTimestamp($result['civil_twilight_end']);
+        $return['ecet']['utc'] = $date->format('H:i:s');
+        $return['ecet']['iso'] = $date->format('c');
+
+        return $return;
     }
 
     public static function convertKnots($knots)
@@ -293,4 +316,33 @@ class Calculator
             'raw' => $coordinates
         ];
     }
+
+    public static function convertDegrees($degrees)
+    {
+        $degrees = fmod ($degrees, 360);
+
+        if ($degrees > 22.5 and $degrees <= 67.5) {
+            $direction = 'NE';
+        } elseif ($degrees > 67.5 and $degrees <= 112.5) {
+            $direction = 'E';
+        } elseif ($degrees > 112.5 and $degrees <= 157.5) {
+            $direction = 'SE';
+        } elseif ($degrees > 157.5 and $degrees <= 202.5) {
+            $direction = 'S';
+        } elseif ($degrees > 202.5 and $degrees <= 247.5) {
+            $direction = 'SW';
+        } elseif ($degrees > 247.5 and $degrees <= 292.5) {
+            $direction = 'W';
+        } elseif ($degrees > 292.5 and $degrees <= 337.5) {
+            $direction = 'NW';
+        } else {
+            $direction = 'N';
+        }
+
+        return [
+            'direction' => $direction
+        ];
+    }
+
+
 }
