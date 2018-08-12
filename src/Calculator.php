@@ -298,7 +298,7 @@ class Calculator
 
     public static function convertDegrees($degrees)
     {
-        $degrees = fmod ($degrees, 360);
+        $degrees = fmod($degrees, 360);
 
         if ($degrees > 22.5 and $degrees <= 67.5) {
             $direction = 'NE';
@@ -322,6 +322,4 @@ class Calculator
             'direction' => $direction
         ];
     }
-
-
 }

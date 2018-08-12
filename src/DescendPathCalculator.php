@@ -38,7 +38,7 @@ class DescendPathCalculator extends Calculator
         ];
 
         $distanceTotal = 0;
-        for($i = 1; $i <= floor($descendTime); $i++) {
+        for ($i = 1; $i <= floor($descendTime); $i++) {
             $highAltitude = $initialAltitude - (($i-1)*$descentRate*$rate);
             $lowAltitude = $initialAltitude - ($i*$descentRate*$rate);
             $highTAS = self::getTAS($ias, $highAltitude);
