@@ -298,28 +298,12 @@ class Calculator
 
     public static function convertDegrees($degrees)
     {
+        $map = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW', 'N'];
         $degrees = fmod($degrees, 360);
-
-        if ($degrees > 22.5 and $degrees <= 67.5) {
-            $direction = 'NE';
-        } elseif ($degrees > 67.5 and $degrees <= 112.5) {
-            $direction = 'E';
-        } elseif ($degrees > 112.5 and $degrees <= 157.5) {
-            $direction = 'SE';
-        } elseif ($degrees > 157.5 and $degrees <= 202.5) {
-            $direction = 'S';
-        } elseif ($degrees > 202.5 and $degrees <= 247.5) {
-            $direction = 'SW';
-        } elseif ($degrees > 247.5 and $degrees <= 292.5) {
-            $direction = 'W';
-        } elseif ($degrees > 292.5 and $degrees <= 337.5) {
-            $direction = 'NW';
-        } else {
-            $direction = 'N';
-        }
+        $index = round($degrees/45);
 
         return [
-            'direction' => $direction
+            'direction' => $map[$index]
         ];
     }
 }
