@@ -145,13 +145,6 @@ class CalculatorTest extends PHPUnit_Framework_TestCase
             ]
         );
     }
-
-    public function testGetSunriseSunset()
-    {
-        $result = e6bCalc::getSunriseSunset('49° 57\' 36" N 8° 38\' 45" E');
-        var_dump($result);
-    }
-
     public function testConvertKnots()
     {
         $result = e6bCalc::convertKnots(-10);

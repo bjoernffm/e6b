@@ -114,27 +114,6 @@ class Calculator
         ];
     }
 
-    public static function getSunriseSunset($coordinates, $date = 'today')
-    {
-        $timestamp = strtotime($date);
-        $coordinates = self::convertCoordinatesToDecimalDegrees($coordinates);
-        $result = date_sun_info($timestamp, $coordinates['lat'], $coordinates['lon']);
-
-        $return = [];
-
-        $date = new DateTime();
-        $date->setTimestamp($result['civil_twilight_begin']);
-        $return['bcmt']['utc'] = $date->format('H:i:s');
-        $return['bcmt']['iso'] = $date->format('c');
-
-        $date = new DateTime();
-        $date->setTimestamp($result['civil_twilight_end']);
-        $return['ecet']['utc'] = $date->format('H:i:s');
-        $return['ecet']['iso'] = $date->format('c');
-
-        return $return;
-    }
-
     public static function convertKnots($knots)
     {
         return [
