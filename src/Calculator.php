@@ -2,9 +2,7 @@
 
 namespace bjoernffm\e6b;
 
-use \Exception;
-use \DateTime;
-use \DateTimeZone;
+use Exception;
 
 class Calculator
 {
@@ -13,7 +11,7 @@ class Calculator
         $course = deg2rad($course % 360);
         $windDirection = deg2rad($windDirection % 360);
 
-        $wca = asin(($windSpeed * sin($windDirection-$course)) / $trueAirspeed);
+        $wca = asin(($windSpeed * sin($windDirection - $course)) / $trueAirspeed);
 
         $gs =
             sqrt(
@@ -27,8 +25,8 @@ class Calculator
 
         return [
             'windCorrectionAngle' => (int) round(rad2deg($wca)),
-            'heading' => (int) round(rad2deg($course + $wca)),
-            'groundSpeed' => (int) round($gs)
+            'heading'             => (int) round(rad2deg($course + $wca)),
+            'groundSpeed'         => (int) round($gs),
         ];
     }
 
@@ -36,18 +34,18 @@ class Calculator
     {
         $trueCourse = deg2rad($trueCourse % 360);
         $windDirection = deg2rad($windDirection % 360);
-        $angle = abs($trueCourse-$windDirection);
+        $angle = abs($trueCourse - $windDirection);
 
-        $headwind = (int) abs(round(cos($angle)*$windSpeed));
-        $crosswind = (int) abs(round(sin($angle)*$windSpeed));
+        $headwind = (int) abs(round(cos($angle) * $windSpeed));
+        $crosswind = (int) abs(round(sin($angle) * $windSpeed));
 
-        if ($angle > (M_PI/2) and  $angle < (M_PI+(M_PI/2))) {
+        if ($angle > (M_PI / 2) and $angle < (M_PI + (M_PI / 2))) {
             $headwind = 0;
         }
 
         return [
-            'headwind' => $headwind,
-            'crosswind' => $crosswind
+            'headwind'  => $headwind,
+            'crosswind' => $crosswind,
         ];
     }
 
@@ -63,7 +61,7 @@ class Calculator
         $standardTemperature = $standardTemperature0 - $pressureAltitude * $lapseRate;
 
         $temperatureRatio = $standardTemperature / $lapseRate;
-        $xx = $standardTemperature /($temperature + $temperatureCorrection);	// for temp in deg C
+        $xx = $standardTemperature / ($temperature + $temperatureCorrection);  // for temp in deg C
         $densityAltitude = $pressureAltitude + $temperatureRatio * (1 - pow($xx, 0.234969));
 
         $a = $densityAltitude * $lapseRate;			// Calculate DA temperature
@@ -78,19 +76,24 @@ class Calculator
         return round($TAS);
     }
 
+    public static function getSonicSpeedByAltitude($altitude, $QNH = 1013.25, $temperature = 15)
+    {
+        return $kt;
+    }
+
     public static function getFlightTime($distance, $groundSpeed)
     {
         if ($distance == 0 and $groundSpeed == 0) {
             return [
-                'minutes' => 0,
-                'formatted' => '00:00'
+                'minutes'   => 0,
+                'formatted' => '00:00',
             ];
         }
 
         if ($groundSpeed <= 0) {
             return [
-                'minutes' => INF,
-                'formatted' => '--:--'
+                'minutes'   => INF,
+                'formatted' => '--:--',
             ];
         }
 
@@ -106,11 +109,11 @@ class Calculator
             $formattedHours = '0'.$formattedHours;
         }
 
-        $formatted = $formattedHours . ':' . $formattedMinutes;
+        $formatted = $formattedHours.':'.$formattedMinutes;
 
         return [
-            'minutes' => (int) round($minutes),
-            'formatted' => $formatted
+            'minutes'   => (int) round($minutes),
+            'formatted' => $formatted,
         ];
     }
 
@@ -126,7 +129,7 @@ class Calculator
     {
         return [
             'knots' => (int) round($kph * 0.539956803456),
-            'mph' => (int) round($kph * 0.621371192237),
+            'mph'   => (int) round($kph * 0.621371192237),
         ];
     }
 
@@ -134,14 +137,14 @@ class Calculator
     {
         return [
             'knots' => (int) round($mph * 0.868976241901),
-            'kph' => (int) round($mph * 1.609344),
+            'kph'   => (int) round($mph * 1.609344),
         ];
     }
 
     public static function convertFeet($ft)
     {
         return [
-            'meters' => (int) round($ft * 0.3048)
+            'meters' => (int) round($ft * 0.3048),
         ];
     }
 
@@ -150,7 +153,7 @@ class Calculator
      * 40.446 -79.982
      * 40.446° N 79.982° W
      * 40° 26.767′ N 79° 58.933′ W
-     * 40° 26' 46" N 79° 58' 56" E
+     * 40° 26' 46" N 79° 58' 56" E.
      */
     public static function convertCoordinatesToDecimalDegrees($latlon)
     {
@@ -172,7 +175,7 @@ class Calculator
 
             return [
                 'lat' => $lat,
-                'lon' => $lon
+                'lon' => $lon,
             ];
         }
 
@@ -192,15 +195,15 @@ class Calculator
 
             return [
                 'lat' => $lat,
-                'lon' => $lon
+                'lon' => $lon,
             ];
         }
 
         // format 40° 26.767′ N 79° 58.933′ W
         preg_match('#\A(\d{1,2})\D+(\d{1,2}\.\d+)\D*([ns])\D*(\d{1,3})\D+(\d{1,2}\.\d+)\D*([woe])#i', $latlon, $matches);
         if (count($matches) == 7) {
-            $lat = abs($matches[1] + ($matches[2]/60));
-            $lon = abs($matches[4] + ($matches[5]/60));
+            $lat = abs($matches[1] + ($matches[2] / 60));
+            $lon = abs($matches[4] + ($matches[5] / 60));
 
             if (strtolower($matches[3]) == 's') {
                 $lat *= -1;
@@ -212,7 +215,7 @@ class Calculator
 
             return [
                 'lat' => $lat,
-                'lon' => $lon
+                'lon' => $lon,
             ];
         }
 
@@ -259,21 +262,21 @@ class Calculator
 
         // format 40° 26′ 46″ N 79° 58′ 56″ W
         $latDegrees = floor($latAbsolute);
-        $latMinutes = floor(($latAbsolute-$latDegrees)*60);
-        $latSeconds = round((($latAbsolute-$latDegrees)*3600)-($latMinutes*60));
+        $latMinutes = floor(($latAbsolute - $latDegrees) * 60);
+        $latSeconds = round((($latAbsolute - $latDegrees) * 3600) - ($latMinutes * 60));
         $lat = $latDegrees.'° '.$latMinutes.'\' '.$latSeconds.'" '.$latDirection;
         $lonDegrees = floor($lonAbsolute);
-        $lonMinutes = floor(($lonAbsolute-$lonDegrees)*60);
-        $lonSeconds = round((($lonAbsolute-$lonDegrees)*3600)-($lonMinutes*60));
+        $lonMinutes = floor(($lonAbsolute - $lonDegrees) * 60);
+        $lonSeconds = round((($lonAbsolute - $lonDegrees) * 3600) - ($lonMinutes * 60));
         $lon = $lonDegrees.'° '.$lonMinutes.'\' '.$lonSeconds.'" '.$lonDirection;
         $dms = $lat.' '.$lon;
 
         // format 40° 26.767′ N 79° 58.933′ W
         $latDegrees = floor($latAbsolute);
-        $latMinutes = round(($latAbsolute-$latDegrees)*60, 3);
+        $latMinutes = round(($latAbsolute - $latDegrees) * 60, 3);
         $lat = $latDegrees.'° '.$latMinutes.'\' '.$latDirection;
         $lonDegrees = floor($lonAbsolute);
-        $lonMinutes = round(($lonAbsolute-$lonDegrees)*60, 3);
+        $lonMinutes = round(($lonAbsolute - $lonDegrees) * 60, 3);
         $lon = $lonDegrees.'° '.$lonMinutes.'\' '.$lonDirection;
         $ddm = $lat.' '.$lon;
 
@@ -290,9 +293,9 @@ class Calculator
         return [
             'dms' => $dms,
             'ddm' => $ddm,
-            'dd' => $dd,
+            'dd'  => $dd,
             'dds' => $ddr,
-            'raw' => $coordinates
+            'raw' => $coordinates,
         ];
     }
 
@@ -300,10 +303,10 @@ class Calculator
     {
         $map = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW', 'N'];
         $degrees = fmod($degrees, 360);
-        $index = round($degrees/45);
+        $index = round($degrees / 45);
 
         return [
-            'direction' => $map[$index]
+            'direction' => $map[$index],
         ];
     }
 }

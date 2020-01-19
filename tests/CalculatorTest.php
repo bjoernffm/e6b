@@ -338,5 +338,7 @@ class CalculatorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($result, ['direction' => 'W']);
         $result = e6bCalc::convertDegrees(292.6);
         $this->assertEquals($result, ['direction' => 'NW']);
+        $result = e6bCalc::convertDegrees(800.6);
+        $this->assertEquals($result, ['direction' => 'E']);
     }
 }
