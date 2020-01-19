@@ -51,7 +51,7 @@ class DescendPathCalculatorOldTest extends PHPUnit_Framework_TestCase
      */
     public function testGetPathByDescendRateWithInvalidArguments1()
     {
-        $result = e6bCalc::getPathByDescendRate(0, 700, 2000, 0);
+        e6bCalc::getPathByDescendRate(0, 700, 2000, 0);
     }
 
     /**
@@ -60,7 +60,7 @@ class DescendPathCalculatorOldTest extends PHPUnit_Framework_TestCase
      */
     public function testGetPathByDescendRateWithInvalidArguments2()
     {
-        $result = e6bCalc::getPathByDescendRate(110, -700, 2000, 0);
+        e6bCalc::getPathByDescendRate(110, -700, 2000, 0);
     }
 
     /**
@@ -69,6 +69,6 @@ class DescendPathCalculatorOldTest extends PHPUnit_Framework_TestCase
      */
     public function testGetPathByDescendRateWithInvalidArguments3()
     {
-        $result = e6bCalc::getPathByDescendRate(110, 700, 2000, 3000);
+        e6bCalc::getPathByDescendRate(110, 700, 2000, 3000);
     }
 }

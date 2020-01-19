@@ -131,10 +131,9 @@ class DescendPathCalculator extends Calculator
                 }
             }
 
+            $speedFormatted = $kias.'KIAS';
             if ($mode == 'mach') {
                 $speedFormatted = 'Mach '.round($mach, 3);
-            } else {
-                $speedFormatted = $kias.'KIAS';
             }
 
             if (count($summary) == 0) {
@@ -165,10 +164,16 @@ class DescendPathCalculator extends Calculator
             }
         }
 
-        //var_dump($summary);
+        return [
+            'data'    => $data,
+            'summary' => $summary,
+        ];
+
+        /*
+        var_dump($summary);
         foreach ($data as $items) {
-            //echo '['.$items['distanceTotal'].','.$items['altitude'].'],';
+            echo '['.$items['distanceTotal'].','.$items['altitude'].'],';
         }
-        //print_r($data);
+        print_r($data);*/
     }
 }
