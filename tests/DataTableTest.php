@@ -32,7 +32,7 @@ class DataTableTest extends PHPUnit_Framework_TestCase
     public function testInterpolateFactor2()
     {
         $table = new IsaTable();
-        $factor = $table->interpolateFactor(0, 10, 11);
+        $table->interpolateFactor(0, 10, 11);
     }
 
     /**
@@ -41,7 +41,7 @@ class DataTableTest extends PHPUnit_Framework_TestCase
     public function testInterpolateFactor3()
     {
         $table = new IsaTable();
-        $factor = $table->interpolateFactor(5, 10, 1);
+        $table->interpolateFactor(5, 10, 1);
     }
 
     /**
@@ -50,18 +50,20 @@ class DataTableTest extends PHPUnit_Framework_TestCase
     public function testInterpolateFactor4()
     {
         $table = new IsaTable();
-        $factor = $table->interpolateFactor(12, 10, 1);
+        $table->interpolateFactor(12, 10, 1);
     }
 
     public function testGetDataByField()
     {
         $table = new IsaTable();
         $result = $table->getDataByField('altitudeInFeet', 1000);
+        $this->assertEquals(339, round($result['speedOfSound']));
     }
 
     public function test__call()
     {
         $table = new IsaTable();
         $result = $table->getDataByAltitudeInFeet(1000);
+        $this->assertEquals(305, round($result['altitudeInMeters']));
     }
 }

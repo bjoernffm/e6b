@@ -13,7 +13,7 @@ class Calculator
 
         $wca = asin(($windSpeed * sin($windDirection - $course)) / $trueAirspeed);
 
-        $gs =
+        $groundSpeed =
             sqrt(
                 pow($trueAirspeed, 2) +
                 pow($windSpeed, 2) -
@@ -26,7 +26,7 @@ class Calculator
         return [
             'windCorrectionAngle' => (int) round(rad2deg($wca)),
             'heading'             => (int) round(rad2deg($course + $wca)),
-            'groundSpeed'         => (int) round($gs),
+            'groundSpeed'         => (int) round($groundSpeed),
         ];
     }
 
@@ -254,10 +254,10 @@ class Calculator
             $latDirection = 'N';
         }
 
+        $lonDirection = 'E';
+
         if ($coordinates['lon'] < 0) {
             $lonDirection = 'W';
-        } else {
-            $lonDirection = 'E';
         }
 
         // format 40° 26′ 46″ N 79° 58′ 56″ W

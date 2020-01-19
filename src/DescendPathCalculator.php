@@ -169,6 +169,6 @@ class DescendPathCalculator extends Calculator
         foreach($data as $items) {
             #echo '['.$items['distanceTotal'].','.$items['altitude'].'],';
         }
-        print_r($data);
+        //print_r($data);
     }
 }

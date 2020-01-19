@@ -25,10 +25,11 @@ abstract class DataTable
                 if ($this->data[$i][$field] <= $value and $value < $this->data[$i+1][$field]) {
                     $factor = $this->interpolateFactor($this->data[$i][$field], $this->data[$i+1][$field], $value);
 
-                    if ($factor == 0) {
-                        // if factor is 0, it is exactly the first record
-                        $record = $this->data[$i];
-                    } else {
+                    $record = $this->data[$i];
+
+                    if ($factor != 0) {
+                        $record = [];
+
                         foreach($this->data[$i+1] as $key => $value) {
                             $record[$key] = (($value-$this->data[$i][$key])*$factor)+$this->data[$i][$key];
                         }
