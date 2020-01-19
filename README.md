@@ -1,5 +1,6 @@
 # E6-B Calculator Emulation
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/3b639653b06c42049fc5629e45ac1331)](https://app.codacy.com/manual/bjoernffm/e6b?utm_source=github.com&utm_medium=referral&utm_content=bjoernffm/e6b&utm_campaign=Badge_Grade_Dashboard)
 [![Build Status](https://travis-ci.org/bjoernffm/e6b.svg?branch=master)](https://travis-ci.org/bjoernffm/e6b)
 
 This class provides a first and very basic version of an ordinary E6-B flight computer also nicknamed the "whiz wheel".
