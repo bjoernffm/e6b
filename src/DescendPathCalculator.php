@@ -35,13 +35,13 @@ class DescendPathCalculator extends Calculator
     {
         $resolver->setDefaults([
             'initialAltitude'       => null,
-            'targetAltitude'   => null,
-            'transitionLevel'   => 180,
-            'qnh'       => 1013,
-            'descendMach' => null,
-            'descendKIAS' => 270,
-            'descendRate' => 1800,
-            'reduce' => true
+            'targetAltitude'        => null,
+            'transitionLevel'       => 180,
+            'qnh'                   => 1013,
+            'descendMach'           => null,
+            'descendKIAS'           => 270,
+            'descendRate'           => 1800,
+            'reduce'                => true,
         ]);
 
         $resolver->isRequired('initialAltitude');
@@ -68,14 +68,14 @@ class DescendPathCalculator extends Calculator
         $data = [];
         $summary = [];
 
-        while(true) {
+        while (true) {
             $table = new IsaTable();
             $result = $table->getDataByField('altitudeInFeet', $altitude);
 
-            $stamp = round($secondsElapsed/60).'min/'.round($distanceTotal).'nm';
+            $stamp = round($secondsElapsed / 60).'min/'.round($distanceTotal).'nm';
 
-            if ($altitude > $this->options['transitionLevel']*100) {
-                $altitudeFormatted = round($altitude/1000);
+            if ($altitude > $this->options['transitionLevel'] * 100) {
+                $altitudeFormatted = round($altitude / 1000);
                 $altitudeFormatted *= 10;
 
                 if ($altitudeFormatted < 100) {
@@ -92,11 +92,11 @@ class DescendPathCalculator extends Calculator
                     }
                     $summary[] = 'After '.$stamp.', passing FL'.$tmpFl.', set QNH '.$this->options['qnh'];
 
-                    $diff = $this->options['qnh']-$qnh;
+                    $diff = $this->options['qnh'] - $qnh;
                     $diff *= 30;
-                    $altitude = $altitude+$diff;
+                    $altitude = $altitude + $diff;
                 }
-                $altitudeFormatted = (round($altitude/100)*100).'ft';
+                $altitudeFormatted = (round($altitude / 100) * 100).'ft';
                 $qnh = $this->options['qnh'];
             }
 
@@ -115,11 +115,11 @@ class DescendPathCalculator extends Calculator
             } else {
                 $kias = $this->options['descendKIAS'];
                 $ktas = Calculator::getTAS($kias, $altitude);
-                $mach = $ktas/($result['speedOfSound']*1.94384);
+                $mach = $ktas / ($result['speedOfSound'] * 1.94384);
 
                 if ($mach > $this->options['descendMach']) {
                     $mach = $this->options['descendMach'];
-                    $kias = $this->options['descendMach']*$result['speedOfSound'];
+                    $kias = $this->options['descendMach'] * $result['speedOfSound'];
                     $ktas = Calculator::getTAS($kias, $altitude);
                     $mode = 'mach';
                 } else {
@@ -141,22 +141,22 @@ class DescendPathCalculator extends Calculator
                 $summary[] = 'Start at '.$altitudeFormatted.' with '.$speedFormatted.' and descend rate of '.$this->options['descendRate'].'ft/min';
             }
 
-            $distance = $ktas*($secondInterval/3600);
+            $distance = $ktas * ($secondInterval / 3600);
             $distanceTotal += $distance;
 
             $data[] = [
-                'elapsedTime' => round($secondsElapsed/60),
-                'distance' => $distance,
+                'elapsedTime'   => round($secondsElapsed / 60),
+                'distance'      => $distance,
                 'distanceTotal' => $distanceTotal,
-                'altitude' => $altitude,
-                'ias' => $kias,
-                'tas' => $ktas,
-                'mach' => $mach,
-                'qnh' => $qnh,
-                'mode' => $mode
+                'altitude'      => $altitude,
+                'ias'           => $kias,
+                'tas'           => $ktas,
+                'mach'          => $mach,
+                'qnh'           => $qnh,
+                'mode'          => $mode,
             ];
 
-            $altitude -= $this->options['descendRate']*($secondInterval/60);
+            $altitude -= $this->options['descendRate'] * ($secondInterval / 60);
             $secondsElapsed += $secondInterval;
 
             if ($altitude <= $this->options['targetAltitude']) {
@@ -165,9 +165,9 @@ class DescendPathCalculator extends Calculator
             }
         }
 
-        #var_dump($summary);
-        foreach($data as $items) {
-            #echo '['.$items['distanceTotal'].','.$items['altitude'].'],';
+        //var_dump($summary);
+        foreach ($data as $items) {
+            //echo '['.$items['distanceTotal'].','.$items['altitude'].'],';
         }
         print_r($data);
     }
