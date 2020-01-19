@@ -2,7 +2,7 @@
 
 namespace bjoernffm\e6b;
 
-use \InvalidArgumentException;
+use InvalidArgumentException;
 
 abstract class DataTable
 {
@@ -17,20 +17,20 @@ abstract class DataTable
         if ($value <= $this->data[0][$field]) {
             // if the searched value is already lower than the lowest record, take the lowest record
             $record = $this->data[0];
-        } else if ($value > $this->data[count($this->data)-1][$field]) {
+        } elseif ($value > $this->data[count($this->data) - 1][$field]) {
             // if the searched value is already higher than the highest record, take the highest record
-            $record = $this->data[count($this->data)-1];
+            $record = $this->data[count($this->data) - 1];
         } else {
-            for($i = 0; $i < count($this->data); $i++) {
-                if ($this->data[$i][$field] <= $value and $value < $this->data[$i+1][$field]) {
-                    $factor = $this->interpolateFactor($this->data[$i][$field], $this->data[$i+1][$field], $value);
+            for ($i = 0; $i < count($this->data); $i++) {
+                if ($this->data[$i][$field] <= $value and $value < $this->data[$i + 1][$field]) {
+                    $factor = $this->interpolateFactor($this->data[$i][$field], $this->data[$i + 1][$field], $value);
 
                     if ($factor == 0) {
                         // if factor is 0, it is exactly the first record
                         $record = $this->data[$i];
                     } else {
-                        foreach($this->data[$i+1] as $key => $value) {
-                            $record[$key] = (($value-$this->data[$i][$key])*$factor)+$this->data[$i][$key];
+                        foreach ($this->data[$i + 1] as $key => $value) {
+                            $record[$key] = (($value - $this->data[$i][$key]) * $factor) + $this->data[$i][$key];
                         }
                     }
                 }
@@ -46,7 +46,7 @@ abstract class DataTable
     public function __call($name, $arguments)
     {
         if (strrpos($name, 'getDataBy', -strlen($name)) !== false) {
-            $field = substr ($name, 9);
+            $field = substr($name, 9);
             $field[0] = strtolower($field[0]);
 
             if (!isset($this->data[0][$field])) {
@@ -79,7 +79,8 @@ abstract class DataTable
             return 0;
         }
 
-        $factor = ($value-$lowerData)/($higherData-$lowerData);
+        $factor = ($value - $lowerData) / ($higherData - $lowerData);
+
         return $factor;
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-use \bjoernffm\e6b\Calculator as e6bCalc;
+use bjoernffm\e6b\Calculator as e6bCalc;
 
 /**
  * @codeCoverageIgnore
@@ -14,8 +14,8 @@ class CalculatorTest extends PHPUnit_Framework_TestCase
             $result,
             [
                 'windCorrectionAngle' => 0,
-                'heading' => 3,
-                'groundSpeed' => 97,
+                'heading'             => 3,
+                'groundSpeed'         => 97,
             ]
         );
     }
@@ -27,8 +27,8 @@ class CalculatorTest extends PHPUnit_Framework_TestCase
             $result,
             [
                 'windCorrectionAngle' => -53,
-                'heading' => 37,
-                'groundSpeed' => 30,
+                'heading'             => 37,
+                'groundSpeed'         => 30,
             ]
         );
     }
@@ -40,8 +40,8 @@ class CalculatorTest extends PHPUnit_Framework_TestCase
             $result,
             [
                 'windCorrectionAngle' => 0,
-                'heading' => 90,
-                'groundSpeed' => 10,
+                'heading'             => 90,
+                'groundSpeed'         => 10,
             ]
         );
     }
@@ -53,8 +53,8 @@ class CalculatorTest extends PHPUnit_Framework_TestCase
             $result,
             [
                 'windCorrectionAngle' => -8,
-                'heading' => 39,
-                'groundSpeed' => 147,
+                'heading'             => 39,
+                'groundSpeed'         => 147,
             ]
         );
     }
@@ -92,8 +92,8 @@ class CalculatorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(
             $result,
             [
-                'minutes' => 3,
-                'formatted' => '00:03'
+                'minutes'   => 3,
+                'formatted' => '00:03',
             ]
         );
     }
@@ -104,8 +104,8 @@ class CalculatorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(
             $result,
             [
-                'minutes' => INF,
-                'formatted' => '--:--'
+                'minutes'   => INF,
+                'formatted' => '--:--',
             ]
         );
     }
@@ -116,8 +116,8 @@ class CalculatorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(
             $result,
             [
-                'minutes' => INF,
-                'formatted' => '--:--'
+                'minutes'   => INF,
+                'formatted' => '--:--',
             ]
         );
     }
@@ -128,8 +128,8 @@ class CalculatorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(
             $result,
             [
-                'minutes' => 0,
-                'formatted' => '00:00'
+                'minutes'   => 0,
+                'formatted' => '00:00',
             ]
         );
     }
@@ -140,11 +140,12 @@ class CalculatorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(
             $result,
             [
-                'minutes' => 1144,
-                'formatted' => '19:04'
+                'minutes'   => 1144,
+                'formatted' => '19:04',
             ]
         );
     }
+
     public function testConvertKnots()
     {
         $result = e6bCalc::convertKnots(-10);
@@ -296,12 +297,12 @@ class CalculatorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($result, [
             'dms' => '50° 51\' 53" N 9° 43\' 5" E',
             'ddm' => '50° 51.889\' N 9° 43.082\' E',
-            'dd' => '50.865 N 9.718 E',
+            'dd'  => '50.865 N 9.718 E',
             'dds' => '50.865 9.718',
             'raw' => [
                 'lat' => 50.8648171,
-                'lon' => 9.7180354
-            ]
+                'lon' => 9.7180354,
+            ],
         ]);
     }
 
@@ -311,12 +312,12 @@ class CalculatorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($result, [
             'dms' => '50° 51\' 53" S 9° 43\' 5" W',
             'ddm' => '50° 51.889\' S 9° 43.082\' W',
-            'dd' => '50.865 S 9.718 W',
+            'dd'  => '50.865 S 9.718 W',
             'dds' => '-50.865 -9.718',
             'raw' => [
                 'lat' => -50.8648171,
-                'lon' => -9.7180354
-            ]
+                'lon' => -9.7180354,
+            ],
         ]);
     }
 
