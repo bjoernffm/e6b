@@ -3,11 +3,11 @@ language: php
 sudo: false
 
 php:
-  - 5.6
   - 7.0
   - 7.1
   - 7.2
-  - nightly
+  - 7.3
+  - 7.4
 
 before_script:
   - curl --version
@@ -16,7 +16,4 @@ before_script:
 script: make test
 
 matrix:
-  include: 
-    - php: hhvm
-      dist: trusty
   fast_finish: true
