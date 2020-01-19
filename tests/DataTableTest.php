@@ -1,6 +1,6 @@
 <?php
 
-use \bjoernffm\e6b\IsaTable;
+use bjoernffm\e6b\IsaTable;
 
 /**
  * @codeCoverageIgnore

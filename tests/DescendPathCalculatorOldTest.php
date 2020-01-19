@@ -1,6 +1,6 @@
 <?php
 
-use \bjoernffm\e6b\DescendPathCalculator as e6bCalc;
+use bjoernffm\e6b\DescendPathCalculator as e6bCalc;
 
 /**
  * @codeCoverageIgnore
@@ -14,15 +14,15 @@ class DescendPathCalculatorOldTest extends PHPUnit_Framework_TestCase
             $result,
             [
                 'nauticalMiles' => 9.59,
-                'minutes' => 5.0,
-                'path' => [
-                    ["nauticalMiles" => 0, "altitude" => 5000,"minutes" => 0],
-                    ["nauticalMiles" => 1.99, "altitude" => 4000,"minutes" => 1],
-                    ["nauticalMiles" => 3.94, "altitude" => 3000,"minutes" => 2],
-                    ["nauticalMiles" => 5.86, "altitude" => 2000,"minutes" => 3],
-                    ["nauticalMiles" => 7.74, "altitude" => 1000,"minutes" => 4],
-                    ["nauticalMiles" => 9.59, "altitude" => 0,"minutes" => 5]
-                ]
+                'minutes'       => 5.0,
+                'path'          => [
+                    ['nauticalMiles' => 0, 'altitude' => 5000, 'minutes' => 0],
+                    ['nauticalMiles' => 1.99, 'altitude' => 4000, 'minutes' => 1],
+                    ['nauticalMiles' => 3.94, 'altitude' => 3000, 'minutes' => 2],
+                    ['nauticalMiles' => 5.86, 'altitude' => 2000, 'minutes' => 3],
+                    ['nauticalMiles' => 7.74, 'altitude' => 1000, 'minutes' => 4],
+                    ['nauticalMiles' => 9.59, 'altitude' => 0, 'minutes' => 5],
+                ],
             ]
         );
     }
@@ -34,13 +34,13 @@ class DescendPathCalculatorOldTest extends PHPUnit_Framework_TestCase
             $result,
             [
                 'nauticalMiles' => 5.47,
-                'minutes' => 2.86,
-                'path' => [
-                    ["nauticalMiles" => 0,"altitude" => 2000,"minutes" => 0],
-                    ["nauticalMiles" => 1.89,"altitude" => 1300,"minutes" => 1],
-                    ["nauticalMiles" => 3.76,"altitude" => 600,"minutes" => 2],
-                    ["nauticalMiles" => 5.47,"altitude" => 0,"minutes" => 2.86]
-                ]
+                'minutes'       => 2.86,
+                'path'          => [
+                    ['nauticalMiles' => 0, 'altitude' => 2000, 'minutes' => 0],
+                    ['nauticalMiles' => 1.89, 'altitude' => 1300, 'minutes' => 1],
+                    ['nauticalMiles' => 3.76, 'altitude' => 600, 'minutes' => 2],
+                    ['nauticalMiles' => 5.47, 'altitude' => 0, 'minutes' => 2.86],
+                ],
             ]
         );
     }

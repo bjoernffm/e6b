@@ -222,8 +222,8 @@ class Calculator
         // format 40° 26' 46" N 79° 58' 56" E
         preg_match('#\A(\d{1,2})\D+(\d{1,2})\D+(\d{1,2})["]?\s*([ns])\D+(\d{1,3})\D+(\d{1,2})\D+(\d{1,2})["]?\s*([woe])#i', $latlon, $matches);
         if (count($matches) == 9) {
-            $lat = abs($matches[1] + ($matches[2]/60) + ($matches[3]/3600));
-            $lon = abs($matches[5] + ($matches[6]/60) + ($matches[7]/3600));
+            $lat = abs($matches[1] + ($matches[2] / 60) + ($matches[3] / 3600));
+            $lon = abs($matches[5] + ($matches[6] / 60) + ($matches[7] / 3600));
 
             if (strtolower($matches[4]) == 's') {
                 $lat *= -1;
@@ -235,7 +235,7 @@ class Calculator
 
             return [
                 'lat' => $lat,
-                'lon' => $lon
+                'lon' => $lon,
             ];
         }
 
